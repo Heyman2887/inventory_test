@@ -22,60 +22,37 @@ public class ItemOnWorld : MonoBehaviour
         switch (thisItem.itemType)
         {
             case 1:
-                if (!inventory[thisItem.itemType - 1].itemList.Contains(thisItem))
-                {
-                    inventory[thisItem.itemType - 1].itemList.Add(thisItem);
-                    thisItem.itemCount++;
-                    UIManager.CreatNewItem(thisItem, thisItem.itemType - 1);
-                }
-                else
-                {
-                    thisItem.itemCount++;
-                    UIManager.RefreshItem(thisItem, thisItem.itemType - 1);
-                }
+                AddNewItem(thisItem.itemType - 1);
                 break;
 
             case 2:
-                if (!inventory[thisItem.itemType - 1].itemList.Contains(thisItem))
-                {
-                    inventory[thisItem.itemType - 1].itemList.Add(thisItem);
-                    thisItem.itemCount++;
-                    UIManager.CreatNewItem(thisItem, thisItem.itemType - 1);
-                }
-                else
-                {
-                    thisItem.itemCount++;
-                    UIManager.RefreshItem(thisItem, thisItem.itemType - 1);
-                }
+                AddNewItem(thisItem.itemType - 1);
                 break;
 
             case 3:
-                if (!inventory[thisItem.itemType - 1].itemList.Contains(thisItem))
-                {
-                    inventory[thisItem.itemType - 1].itemList.Add(thisItem);
-                    thisItem.itemCount++;
-                    UIManager.CreatNewItem(thisItem, thisItem.itemType - 1);
-                }
-                else
-                {
-                    thisItem.itemCount++;
-                    UIManager.RefreshItem(thisItem, thisItem.itemType - 1);
-                }
+                AddNewItem(thisItem.itemType - 1);
                 break;
 
             case 4:
-                if (!inventory[thisItem.itemType - 1].itemList.Contains(thisItem))
-                {
-                    inventory[thisItem.itemType - 1].itemList.Add(thisItem);
-                    thisItem.itemCount++;
-                    UIManager.CreatNewItem(thisItem, thisItem.itemType - 1);
-                }
-                else
-                {
-                    thisItem.itemCount++;
-                    UIManager.RefreshItem(thisItem, thisItem.itemType - 1);
-                }
+                AddNewItem(thisItem.itemType - 1);
                 break;
+        }
+    }
+
+    private void AddNewItem(int inventoryType)
+    {
+        if (!inventory[inventoryType].itemList.Contains(thisItem))
+        {
+            inventory[inventoryType].itemList.Add(thisItem);
+            thisItem.itemCount++;
+            inventory[inventoryType].itemList.Sort();
+            UIManager.RefreshItem(inventoryType);
+            //UIManager.CreatNewItem(thisItem, inventoryType);
+        }
+        else
+        {
+            thisItem.itemCount++;
+            UIManager.DuplicateItem(thisItem, inventoryType);
         }
     }
 }

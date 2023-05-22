@@ -14,8 +14,6 @@ public class Move : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //h = Input.GetAxis("Horizontal");
-        //v = Input.GetAxis("Vertical");
         Vector3 dir = new Vector3(h, 0, v);
         if (dir != Vector3.zero)
         {

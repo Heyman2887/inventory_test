@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class UIManager : MonoBehaviour
 {
     public GameObject bagPanel;
+    public GameObject descriptionPanel;
     public Toggle[] toggle;
     private bool isBagOpen;
     static UIManager instance;
@@ -31,8 +35,8 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         bagPanel.SetActive(false);
+        descriptionPanel.SetActive(false);
         slotGrid[0].SetActive(true);
-
         RefreshItem(0);
     }
 
@@ -48,17 +52,28 @@ public class UIManager : MonoBehaviour
         instance.itemImage.sprite = null;
         instance.itemName.text = "";
     }
+
+    //点击背包按钮打开背包
     public static void OnClickBagHandler()
     {
         instance.isBagOpen = true;
     }
 
+    //点击物品查看详细信息
+    public static void OnClickItemHandler()
+    {
+        instance.descriptionPanel.SetActive(true);
+    }
+
+    //点击物品分类按钮，切换不同类型物品页面
     public static void OnClickToggleHandler()
     {
+        instance.descriptionPanel.SetActive(false);
+
         for (int i = 0; i < instance.toggle.Length; i++)
         {
             instance.slotGrid[i].SetActive(false);
-            if (instance.toggle[i].isOn == true)
+            if (instance.toggle[i].isOn)
             {
                 instance.slotGrid[i].SetActive(true);
             }
@@ -85,20 +100,52 @@ public class UIManager : MonoBehaviour
     //添加slot到grid
     public static void CreatNewItem(Item item, int InventoryType)
     {
-        Slot newItem = Instantiate(instance.slotPrefab, instance.slotGrid[InventoryType].transform);
-        newItem.slotItem = item;
-        newItem.slotImage.sprite = item.itemImage;
-        newItem.slotNum.text = item.itemCount.ToString();
-    }
-
-    //增加相同的物品数量
-    public static void DuplicateItem(Item item, int InventoryType)
-    {
-        for (int i = 0; i < instance.slotGrid[InventoryType].transform.childCount; i++)
+        //判断添加到grid中的slot中的Item数量是否大于99，是则递归到下一层，生成一个新的slot
+        if (item.itemCount > 99)
         {
-            if (instance.slotGrid[InventoryType].transform.GetChild(i).GetComponent<Slot>().slotItem.itemGlobalID == item.itemGlobalID)
+            Slot newItem = Instantiate(instance.slotPrefab, instance.slotGrid[InventoryType].transform);
+            newItem.slotItem = item;
+            newItem.slotImage.sprite = item.itemImage;
+            newItem.slotNum.text = "99";
+            if (item.isNewItem == true)
             {
-                instance.slotGrid[InventoryType].transform.GetChild(i).GetComponent<Slot>().slotNum.text = item.itemCount.ToString();
+                newItem.transform.GetChild(1).GetComponent<Text>().color = new Color(1, 0.7f, 0.2f, 1);
+            }
+            else
+            {
+                newItem.newItem.text = "";
+            }
+
+            //克隆一份item，作为参数传递到下一层递归
+            Item _item = ScriptableObject.CreateInstance<Item>();
+
+            _item.itemGlobalID = item.itemGlobalID;
+            _item.itemPartID = item.itemPartID;
+            _item.itemType = item.itemType;
+            _item.itemUsageTime = item.itemUsageTime;
+            _item.itemCount = item.itemCount;
+            _item.itemName = item.itemName;
+            _item.itemDescription = item.itemDescription;
+            _item.itemImage = item.itemImage;
+            _item.isNewItem = false;
+
+            _item.itemCount -= 99;
+            CreatNewItem(_item, InventoryType);
+        }
+
+        else
+        {
+            Slot newItem = Instantiate(instance.slotPrefab, instance.slotGrid[InventoryType].transform);
+            newItem.slotItem = item;
+            newItem.slotImage.sprite = item.itemImage;
+            newItem.slotNum.text = item.itemCount.ToString();
+            if (item.isNewItem == true)
+            {
+                newItem.transform.GetChild(1).GetComponent<Text>().color = new Color(1, 0.7f, 0.2f, 1);
+            }
+            else
+            {
+                newItem.newItem.text = "";
             }
         }
     }
@@ -106,14 +153,28 @@ public class UIManager : MonoBehaviour
     //刷新grid
     public static void RefreshItem(int InventoryType) 
     {
+        int sum = 0;
         for (int i = 0; i < instance.slotGrid[InventoryType].transform.childCount; i++)
         {
             Destroy(instance.slotGrid[InventoryType].transform.GetChild(i).gameObject);
         }
 
+        //判断当前物体在UI中的slot数量是否大于背包该grid面板的数量上限
         for (int i = 0; i < instance.Bag[InventoryType].itemList.Count; i++)
         {
-            CreatNewItem(instance.Bag[InventoryType].itemList[i], InventoryType);
+            sum += (int)Math.Ceiling((double)instance.Bag[InventoryType].itemList[i].itemCount / 99);
+        }
+
+        for (int i = 0; i < instance.Bag[InventoryType].itemList.Count; i++)
+        {
+            if (sum > 28)
+            {
+                Debug.Log("The backpack is full!");
+            }
+            else
+            {
+                CreatNewItem(instance.Bag[InventoryType].itemList[i], InventoryType);
+            }
         }
     }
 }

@@ -15,6 +15,9 @@ public class Item : ScriptableObject,IComparable<Item>
     [TextArea]
     public string itemDescription;
     public Sprite itemImage;
+    [HideInInspector]
+    //标记是否为新物体
+    public bool isNewItem;
 
     public int CompareTo(Item other)
     {

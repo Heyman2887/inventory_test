@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2888e7e3e9d8ed408e9578abb5971ea, type: 3}
   m_Name: Consumables Bag
   m_EditorClassIdentifier: 
-  itemList: []
+  itemList:
+  - {fileID: 11400000, guid: d4db75f2eea68e74bbdecef208b8a1ca, type: 2}
+  - {fileID: 11400000, guid: c9bc8dd39346a714bb7aa9768fc75c6b, type: 2}

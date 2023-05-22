@@ -97,6 +97,25 @@ public class UIManager : MonoBehaviour
         instance.itemImage.sprite = item.itemImage;
     }
 
+    public static void AddNewItem(int inventoryType,Item item)
+    {
+        //判断是否在list中，如果不在则add到list
+        if (!instance.Bag[inventoryType].itemList.Contains(item))
+        {
+            instance.Bag[inventoryType].itemList.Add(item);
+            item.itemCount++;
+            item.isNewItem = true;
+            //排序，同时更新UI，获得的新物品实时显示在UI中
+            instance.Bag[inventoryType].itemList.Sort();
+            UIManager.RefreshItem(inventoryType);
+        }
+        else
+        {
+            item.itemCount++;
+            UIManager.RefreshItem(inventoryType);
+        }
+    }
+
     //添加slot到grid
     public static void CreatNewItem(Item item, int InventoryType)
     {

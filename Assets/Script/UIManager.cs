@@ -80,12 +80,17 @@ public class UIManager : MonoBehaviour
             RefreshItem(i);
         }
     }
-    private void OpenBag()
+    private static void OpenBag()
     {
-        if (isBagOpen || Input.GetKeyDown(KeyCode.I))
+        if (instance.isBagOpen || Input.GetKeyDown(KeyCode.I))
         {
-            bagPanel.SetActive(!bagPanel.activeSelf);
-            isBagOpen = false;
+            instance.bagPanel.SetActive(!instance.bagPanel.activeSelf);
+            instance.slotGrid[0].SetActive(true);
+            instance.slotGrid[1].SetActive(false);
+            instance.slotGrid[2].SetActive(false);
+            instance.slotGrid[3].SetActive(false);
+            RefreshItem(0);
+            instance.isBagOpen = false;
         }
     }
 
@@ -99,20 +104,42 @@ public class UIManager : MonoBehaviour
 
     public static void AddNewItem(int inventoryType,Item item)
     {
+        int sum = 0;
+
+        //判断当前物体在UI中的slot数量是否大于背包该grid面板的数量上限
+        for (int i = 0; i < instance.Bag[inventoryType].itemList.Count; i++)
+        {
+            sum += (int)Math.Ceiling((double)instance.Bag[inventoryType].itemList[i].itemCount / 99);
+        }
+
         //判断是否在list中，如果不在则add到list
         if (!instance.Bag[inventoryType].itemList.Contains(item))
         {
-            instance.Bag[inventoryType].itemList.Add(item);
-            item.itemCount++;
-            item.isNewItem = true;
-            //排序，同时更新UI，获得的新物品实时显示在UI中
-            instance.Bag[inventoryType].itemList.Sort();
-            UIManager.RefreshItem(inventoryType);
+            if (sum > 27)
+            {
+                Debug.Log("The backpack is full!");
+            }
+            else 
+            {
+                instance.Bag[inventoryType].itemList.Add(item);
+                item.itemCount++;
+                item.isNewItem = true;
+                //排序，同时更新UI，获得的新物品实时显示在UI中
+                instance.Bag[inventoryType].itemList.Sort();
+                UIManager.RefreshItem(inventoryType);
+            }
         }
         else
         {
-            item.itemCount++;
-            UIManager.RefreshItem(inventoryType);
+            if (sum > 27 && (item.itemCount % 99 == 0))
+            {
+                Debug.Log("The backpack is full!");
+            }
+            else
+            {
+                item.itemCount++;
+                UIManager.RefreshItem(inventoryType);
+            }
         }
     }
 
@@ -172,28 +199,14 @@ public class UIManager : MonoBehaviour
     //刷新grid
     public static void RefreshItem(int InventoryType) 
     {
-        int sum = 0;
         for (int i = 0; i < instance.slotGrid[InventoryType].transform.childCount; i++)
         {
             Destroy(instance.slotGrid[InventoryType].transform.GetChild(i).gameObject);
         }
 
-        //判断当前物体在UI中的slot数量是否大于背包该grid面板的数量上限
         for (int i = 0; i < instance.Bag[InventoryType].itemList.Count; i++)
         {
-            sum += (int)Math.Ceiling((double)instance.Bag[InventoryType].itemList[i].itemCount / 99);
-        }
-
-        for (int i = 0; i < instance.Bag[InventoryType].itemList.Count; i++)
-        {
-            if (sum > 28)
-            {
-                Debug.Log("The backpack is full!");
-            }
-            else
-            {
-                CreatNewItem(instance.Bag[InventoryType].itemList[i], InventoryType);
-            }
+            CreatNewItem(instance.Bag[InventoryType].itemList[i], InventoryType);
         }
     }
 }

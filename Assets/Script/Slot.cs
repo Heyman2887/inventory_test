@@ -14,10 +14,6 @@ public class Slot : MonoBehaviour
     {
         UIManager.UpdateItemInfo(slotItem);
         UIManager.OnClickItemHandler();
-        slotItem.isNewItem = false;
-        for (int i = 0; i < 4; i++)
-        {
-            UIManager.RefreshItem(i);
-        }
+        this.transform.GetChild(1).GetComponent<Text>().color = new Color(0, 0, 0, 0);
     }
 }

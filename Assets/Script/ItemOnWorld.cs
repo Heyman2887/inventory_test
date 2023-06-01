@@ -22,7 +22,7 @@ public class ItemOnWorld : MonoBehaviour
         switch (thisItem.itemType)
         {
             case 1:
-                UIManager.AddNewItem(thisItem.itemType - 1,thisItem);
+                UIManager.AddNewItem(thisItem.itemType - 1, thisItem);
                 break;
 
             case 2:

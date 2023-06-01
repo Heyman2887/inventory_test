@@ -13,7 +13,6 @@
     public string itemName;
     public string itemDescription;
     public Sprite itemImage;
-    public bool isNewItem;
     
   Inventory中有存储Item的list
 

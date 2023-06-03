@@ -16,7 +16,9 @@ MonoBehaviour:
   itemPartID: 3001
   itemType: 3
   itemUsageTime: 0
-  itemCount: 2673
+  itemCount: 1
+  itemMaxCount: 1
+  itemMaxCountInSlot: 1
   itemName: "\u83B1\u897F\u7684\u5C0F\u718A"
   itemDescription: "\u6536\u85CF\u54C1\uFF0C\u83B1\u897F\u6700\u73CD\u8D35\u7684\u5B9D\u7269\uFF0C\u548C\u83B1\u897F\u5F62\u5F71\u4E0D\u79BB"
   itemImage: {fileID: 21300000, guid: b416145d20baa364598d07e1740ae2fb, type: 3}

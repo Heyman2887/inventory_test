@@ -10,9 +10,13 @@
     public int itemType;
     public int itemUsageTime;
     public int itemCount;
+    public int itemMaxCount;
+    public int itemMaxCountInSlot;
     public string itemName;
+    [TextArea]
     public string itemDescription;
     public Sprite itemImage;
+    public bool isNewItem;
     
   Inventory中有存储Item的list
 

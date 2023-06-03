@@ -8,12 +8,16 @@ public class ItemOnWorld : MonoBehaviour
 {
     public Item thisItem;
 
+    public static event Action<GameObject> DestoryItem;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             AddNewItemToInventory();
-            Destroy(gameObject);
+            //判断销毁事件是否为空，不是则调用方法销毁当前游戏物体
+            DestoryItem?.Invoke(gameObject);
+            DestoryItem = null;
         }
     }
 

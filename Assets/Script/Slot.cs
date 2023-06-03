@@ -15,5 +15,6 @@ public class Slot : MonoBehaviour
         UIManager.UpdateItemInfo(slotItem);
         UIManager.OnClickItemHandler();
         this.transform.GetChild(1).GetComponent<Text>().color = new Color(0, 0, 0, 0);
+        slotItem.isNewItem = false;
     }
 }

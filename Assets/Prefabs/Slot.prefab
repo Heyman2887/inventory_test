@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d96caa8fe4454f4991ce73ab4e7de46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotItem: {fileID: 11400000, guid: d4db75f2eea68e74bbdecef208b8a1ca, type: 2}
+  slotItem: {fileID: 0}
   slotImage: {fileID: 6071563460026911480}
   slotNum: {fileID: 1869959681657345333}
   newItem: {fileID: 406191559684596071}

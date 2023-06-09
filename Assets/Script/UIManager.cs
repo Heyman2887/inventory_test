@@ -30,6 +30,13 @@ public class UIManager : MonoBehaviour
     //存放生成的slot
     private List<Slot> SlotList = new();
 
+    //获取玩家
+    public Player player;
+    //获取交互按键
+    public GameObject normalButton;
+    public GameObject specialButton;
+    public GameObject limitedButton;
+
     private void Awake()
     {
         if (instance != null)
@@ -47,11 +54,14 @@ public class UIManager : MonoBehaviour
         pageCount = 0;
         pageIndex = 1;
         DestroySlotInslotGrid();
+        //DoesBagHaveSpecialItem();
     }
 
     private void Update()
     {
         OpenBag();
+        DoesBagHaveSpecialItem();
+        DoesBagHaveLimitedItem();
     }
 
     //点击背包按钮打开背包
@@ -116,6 +126,73 @@ public class UIManager : MonoBehaviour
         instance.pageIndex--;
         DestroySlotInslotGrid();
         RefreshItem(instance.currentInventoryType);
+    }
+
+    public static void OnClickNormalHandler()
+    {
+        Collider collider = instance.player.DetectItem();
+        if (collider != null)
+        {
+            //判断Tag,对不同的可交互物体进行操作
+            if(collider.tag == "Door")
+            {
+                Interactable interactable = collider.GetComponent<Interactable>();
+                interactable.OnClick();
+            }
+        }
+
+        //TODO:建立更多的判断使得通用的按键可以对多种物品进行交互
+    }
+
+    public static void OnClickSpecialHandler()
+    {
+        if(instance.Bag[1].itemList.Exists(i => i.itemName == "怀表"))
+        {
+            Debug.Log("使用了怀表");
+        }
+    }
+
+    public static void OnClickLimitedHandler()
+    {
+        Collider collider = instance.player.DetectItem();
+        if (collider != null)
+        {
+            //判断Tag,对不同的可交互物体进行操作
+            if (collider.tag == "Limited Box" && instance.Bag[3].itemList.Exists(i => i.itemName == "临时道具"))
+            {
+                Interactable interactable = collider.GetComponent<Interactable>();
+                interactable.OnClick();
+                instance.limitedButton.SetActive(false);
+                Item item = instance.Bag[3].itemList.Find(i => i.itemName == "临时道具");
+                item.itemCount--;
+                instance.Bag[3].itemList.Remove(item);
+                DestroySlotInslotGrid();
+            }
+        }
+    }
+
+    //查找背包内是否有特殊道具，并把按钮图片更改为特殊道具图片
+    public static void DoesBagHaveSpecialItem()
+    {
+        Item item = instance.Bag[1].itemList.Find(i => i.itemName == "怀表");
+        if (item != null)
+        {
+            //设置当前按钮的图像为该特殊道具图像
+            instance.specialButton.GetComponent<Image>().sprite = item.itemImage;
+        }
+    }
+
+    //查找背包内是否有临时道具，如果有则启动临时按钮，并把按钮图片更改为临时道具图片
+    public static void DoesBagHaveLimitedItem()
+    {
+        //遍历背包查找是否有该临时道具
+        Item item = instance.Bag[3].itemList.Find(i => i.itemName == "临时道具");
+        //设置当前按钮的图像为该特殊道具图像
+        if (item != null)
+        {
+            instance.limitedButton.GetComponent<Image>().sprite = item.itemImage;
+            instance.limitedButton.SetActive(true);
+        }
     }
 
     //物品信息显示

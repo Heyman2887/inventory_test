@@ -6,6 +6,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/New Item")]
 public class Item : ScriptableObject,IComparable<Item>
 {
+    public enum itemFunctionType
+    {
+        normalItem = 1,
+        specialItem = 2,
+        passiveItem = 3
+    }
+
+    public itemFunctionType itemfunctionType;
+    
     public int itemGlobalID;
     public int itemPartID;
     public int itemType;

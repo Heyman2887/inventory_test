@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f73af4c1f600d14da1c26129f33d184, type: 3}
-  m_Name: Pocket watch
+  m_Name: Limited item
   m_EditorClassIdentifier: 
   itemfunctionType: 0
-  itemGlobalID: 3
-  itemPartID: 2001
-  itemType: 2
+  itemGlobalID: 20
+  itemPartID: 4001
+  itemType: 4
   itemUsageTime: 0
   itemCount: 0
   itemMaxCount: 1
   itemMaxCountInSlot: 1
-  itemName: "\u6000\u8868"
-  itemDescription: "\u770B\u8D77\u6765\u666E\u666E\u901A\u901A\u7684\u6000\u8868\uFF0C\u4E00\u5207\u56E0\u5B83\u800C\u8D77"
-  itemImage: {fileID: 21300000, guid: 8e859c149e0cd814ea9acc8581953bd6, type: 3}
-  isNewItem: 0
+  itemName: "\u4E34\u65F6\u9053\u5177"
+  itemDescription: "\u4E34\u65F6\u9053\u5177"
+  itemImage: {fileID: 21300000, guid: 70c500e3f9a702743946d084c36b42c6, type: 3}
+  isNewItem: 1

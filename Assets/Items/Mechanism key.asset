@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f73af4c1f600d14da1c26129f33d184, type: 3}
   m_Name: Mechanism key
   m_EditorClassIdentifier: 
+  itemfunctionType: 0
   itemGlobalID: 1
   itemPartID: 1001
   itemType: 1
   itemUsageTime: 0
-  itemCount: 30
+  itemCount: 0
   itemMaxCount: 9900
   itemMaxCountInSlot: 99
   itemName: "\u673A\u5173\u94A5\u5319"

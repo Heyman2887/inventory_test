@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f73af4c1f600d14da1c26129f33d184, type: 3}
   m_Name: Pocket watch spring
   m_EditorClassIdentifier: 
+  itemfunctionType: 0
   itemGlobalID: 4
   itemPartID: 2002
   itemType: 2
   itemUsageTime: 0
-  itemCount: 1
+  itemCount: 0
   itemMaxCount: 1
   itemMaxCountInSlot: 1
   itemName: "\u6000\u8868\u53D1\u6761"

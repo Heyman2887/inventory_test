@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a32b5f22ca8cd446a5cb7bddcd7a262, type: 3}
+  m_Name: Limited item2
+  m_EditorClassIdentifier: 
+  itemfunctionType: 0
+  itemGlobalID: 21
+  itemPartID: 4002
+  itemType: 4
+  itemCount: 0
+  itemMaxCount: 1
+  itemMaxCountInSlot: 1
+  itemName: "\u9650\u65F6\u7269\u54C12"
+  itemDescription: "\u6709\u4F7F\u7528\u65F6\u95F4\u9650\u5236\u7684\u7269\u54C12"
+  itemImage: {fileID: 0}
+  isNewItem: 1
+  itemUsageTime: 0

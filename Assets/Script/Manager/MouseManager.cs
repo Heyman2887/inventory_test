@@ -31,15 +31,11 @@ public class MouseManager : MonoBehaviour
             {
                 if(hitInfo.collider.GetComponent<TimeController>() != null && Input.GetMouseButtonDown(0))
                 {
-                    TimeController.isUsePocketWatch += OnClickObject;
+                    TimeController timeController = hitInfo.collider.GetComponent<TimeController>();
+                    timeController.ReversalTime();
                     OnClickMouse = null;
                 }
             }
         }
-    }
-
-    public void OnClickObject(GameObject gameObject)
-    {
-
     }
 }
